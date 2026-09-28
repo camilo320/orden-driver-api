@@ -1,6 +1,7 @@
 package com.ait.pase.orden_api.controller;
 
 import com.ait.pase.orden_api.entity.Driver;
+import com.ait.pase.orden_api.model.DriverRequest;
 import com.ait.pase.orden_api.service.DriverService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,7 +25,7 @@ public class DriverController {
     @PostMapping
     @ResponseStatus(CREATED)
     @Operation(summary = "crear un driver")
-    public ResponseEntity<UUID> save(@Valid @RequestBody Driver driver) {
+    public ResponseEntity<UUID> save(@Valid @RequestBody DriverRequest driver) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save( driver ));
     }
 

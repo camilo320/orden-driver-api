@@ -1,16 +1,19 @@
 package com.ait.pase.orden_api.service;
 
+import com.ait.pase.orden_api.entity.Driver;
 import com.ait.pase.orden_api.exception.OperationNotPermittedException;
 import com.ait.pase.orden_api.model.OrdenDTO;
 import com.ait.pase.orden_api.entity.Orden;
 import com.ait.pase.orden_api.entity.Status;
 import com.ait.pase.orden_api.exception.ResourceNotFoundException;
+import com.ait.pase.orden_api.repository.DriverRepository;
 import com.ait.pase.orden_api.repository.OrdenRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,7 +27,9 @@ import java.util.stream.Collectors;
 public class OrdenService {
 
     private final OrdenRepository repository;
+    private final DriverRepository driverRepository;
     private final OrdenMapper mapper;
+    private final FileStorageService fileStorageService;
 
     public UUID save(Orden orden) {
         return repository.save(orden).getId();
@@ -111,4 +116,23 @@ public class OrdenService {
     }
 
 
+    public void asignacion(UUID ordenId, UUID driverId, MultipartFile pdf, MultipartFile imagen) {
+        Orden orden = repository.findById(ordenId)
+                .orElseThrow(() -> new EntityNotFoundException("Orden no encontrada con ID:: " + ordenId));
+
+        if(orden.getStatus() != Status.CREATED){
+            throw new OperationNotPermittedException("La asignacion solo esta permitido cuando la orden tiene status CREATED ");
+        }
+        Driver driver = driverRepository.findById(driverId)
+                .orElseThrow(() -> new EntityNotFoundException("Driver no encontrada con ID:: " + driverId));
+
+        if( !driver.getActive() ){
+            throw new OperationNotPermittedException("La asignacion solo esta permitido cuando el driver esta activo");
+        }
+
+        orden.setAsignacionArchivo(fileStorageService.save(pdf, ordenId.toString()));
+        orden.setAsignacionImagen(fileStorageService.save(imagen,ordenId.toString()));
+        orden.setDriver(Driver.builder().id(driverId).build());
+        repository.save(orden);
+    }
 }

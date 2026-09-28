@@ -2,6 +2,7 @@ package com.ait.pase.orden_api.entity;
 
 
 import com.ait.pase.orden_api.model.OrdenDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -37,6 +38,13 @@ public class Orden {
     @LastModifiedDate
     @Column(insertable = false)
     private LocalDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "driver_id")
+    @JsonIgnore
+    private Driver driver;
+    private String AsignacionArchivo;
+    private String AsignacionImagen;
 
     public static Orden fromCreate(OrdenDTO dto) {
         Orden orden = new Orden();

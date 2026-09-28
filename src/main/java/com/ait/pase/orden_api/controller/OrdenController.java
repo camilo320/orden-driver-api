@@ -5,6 +5,7 @@ import com.ait.pase.orden_api.entity.Orden;
 import com.ait.pase.orden_api.entity.Status;
 import com.ait.pase.orden_api.service.OrdenService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -97,5 +99,19 @@ public class OrdenController {
     @Operation(summary = "Borrar una orden por medio de su ID ")
     public void deleteById(@PathVariable UUID id) {
         service.deleteById(id);
+    }
+
+    @PostMapping(value = "/asignacion/{orden-id}/{driver-id}", consumes = "multipart/form-data")
+    @Operation(summary = "asignacion de una orden a un sriver con documentos adjuntos")
+    public ResponseEntity<?> asignacion(
+            @PathVariable("orden-id") UUID idOrden,
+            @PathVariable("driver-id") UUID idDriver,
+            @Parameter()
+            @RequestPart("pdf") MultipartFile pdf,
+            @Parameter()
+            @RequestPart("imagen") MultipartFile imagen
+    ) {
+        service.asignacion(idOrden,idDriver,pdf,imagen);
+        return ResponseEntity.accepted().build();
     }
 }
