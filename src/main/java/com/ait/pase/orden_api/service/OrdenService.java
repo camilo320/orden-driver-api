@@ -7,11 +7,8 @@ import com.ait.pase.orden_api.entity.Status;
 import com.ait.pase.orden_api.exception.ResourceNotFoundException;
 import com.ait.pase.orden_api.repository.OrdenRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
