@@ -1,0 +1,39 @@
+networks:
+  network-odapi-id:
+    name: service-network-odapi
+volumes:
+  postgres:
+    driver: local
+
+services:
+  my-postgres-odapi:
+    image: postgres
+    environment:
+      TZ: America/Mexico_City
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: odapidb
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - 5432:5432
+    networks:
+      - network-odapi-id
+
+  service-odapi:
+    build:
+      context: .      
+    container_name: service-odapi
+    ports:
+      - 8080:8080
+    environment:
+      TZ: America/Mexico_City
+      SPRING_DATASOURCE_URL: jdbc:postgresql://my-postgres-odapi:5432/odapidb
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: pass
+      SPRING_DATASOURCE_DRIVER-CLASS-NAME: org.postgresql.Driver
+    depends_on:
+          - my-postgres-odapi
+    networks:
+      - network-odapi-id
