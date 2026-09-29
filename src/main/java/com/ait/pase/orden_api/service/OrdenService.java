@@ -3,9 +3,11 @@ package com.ait.pase.orden_api.service;
 import com.ait.pase.orden_api.entity.Driver;
 import com.ait.pase.orden_api.exception.OperationNotPermittedException;
 import com.ait.pase.orden_api.model.OrdenDTO;
+import com.ait.pase.orden_api.model.OrdenResponse;
 import com.ait.pase.orden_api.entity.Orden;
 import com.ait.pase.orden_api.entity.Status;
 import com.ait.pase.orden_api.exception.ResourceNotFoundException;
+import com.ait.pase.orden_api.model.OrdenRequest;
 import com.ait.pase.orden_api.repository.DriverRepository;
 import com.ait.pase.orden_api.repository.OrdenRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -39,37 +41,42 @@ public class OrdenService {
         orden.setStatus(Status.CREATED);
         return repository.save(orden).getId();
     }
-    public List<OrdenDTO> getAll() {
+    public UUID save(OrdenRequest ordenRequest){
+        Orden orden = Orden.from(ordenRequest);
+        orden.setStatus(Status.CREATED);
+        return repository.save(orden).getId();
+    }
+    public List<OrdenResponse> getAll() {
        return ((List<Orden>) repository.findAll())
                 .stream()
                 .map(mapper)
                 .collect(Collectors.toList());
     }
-    public List<OrdenDTO> findByStatus(Status status) {
+    public List<OrdenResponse> findByStatus(Status status) {
         return repository.findByStatus(status)
                 .stream()
                 .map(mapper)
                 .collect(Collectors.toList());
     }
-    public List<OrdenDTO> findByOrigin(String origin) {
+    public List<OrdenResponse> findByOrigin(String origin) {
         return repository.findByOrigin(origin)
                 .stream()
                 .map(mapper)
                 .collect(Collectors.toList());
     }
-    public List<OrdenDTO> findByDestination(String destination) {
+    public List<OrdenResponse> findByDestination(String destination) {
         return repository.findByDestination(destination)
                 .stream()
                 .map(mapper)
                 .collect(Collectors.toList());
     }
-    public List<OrdenDTO> findByCreatedAtBetween(LocalDateTime to, LocalDateTime from) {
+    public List<OrdenResponse> findByCreatedAtBetween(LocalDateTime to, LocalDateTime from) {
         return repository.findByCreatedAtBetween(to, from)
                 .stream()
                 .map(mapper)
                 .collect(Collectors.toList());
     }
-    public OrdenDTO getById(UUID id) {
+    public OrdenResponse getById(UUID id) {
         return repository.findById(id)
                 .map(mapper)
                 .orElseThrow(() -> new ResourceNotFoundException("orden con id : " + id));

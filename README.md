@@ -19,7 +19,14 @@ docker compose up -d
 ## URLs
 
 - Documentacion swagger: http://localhost:8080/swagger-ui/index.html
+## Credenciales para el usuario de prueba
 
+```json
+{
+  "username": "usuario.uno@ait.pase.com",
+  "password": "password"
+}
+```
 ## Detener los contenedores y eliminarlas
 
 ```shell

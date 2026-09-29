@@ -2,6 +2,7 @@ package com.ait.pase.orden_api.entity;
 
 
 import com.ait.pase.orden_api.model.OrdenDTO;
+import com.ait.pase.orden_api.model.OrdenRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -52,6 +53,12 @@ public class Orden {
         orden.setOrigin(dto.origin());
         orden.setDestination(dto.destination());
         orden.setStatus(dto.status());
+        return orden;
+    }
+    public static Orden from(OrdenRequest ordenRequest) {
+        Orden orden = new Orden();
+        orden.setOrigin(ordenRequest.origin());
+        orden.setDestination(ordenRequest.destination());
         return orden;
     }
 }

@@ -1,8 +1,8 @@
 package com.ait.pase.orden_api.controller;
 
-import com.ait.pase.orden_api.model.OrdenDTO;
-import com.ait.pase.orden_api.entity.Orden;
+import com.ait.pase.orden_api.model.OrdenResponse;
 import com.ait.pase.orden_api.entity.Status;
+import com.ait.pase.orden_api.model.OrdenRequest;
 import com.ait.pase.orden_api.service.OrdenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,56 +31,56 @@ public class OrdenController {
     @PostMapping
     @ResponseStatus(CREATED)
     @Operation(summary = "crear una orden")
-    public ResponseEntity<UUID> save(@Valid @RequestBody OrdenDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save( dto ));
+    public ResponseEntity<UUID> save(@Valid @RequestBody OrdenRequest orden) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save( orden ));
     }
 
     @PatchMapping("/changeStatus/{id}")
     public ResponseEntity<UUID> changeStatus( @PathVariable("id") UUID id, @RequestParam("status") Status status ) {
         return ResponseEntity.ok(service.changeStatus(id,status));
     }
-
+    /*
     @GetMapping
     @Operation(summary = "Obtiene todas las ordenes")
-    public ResponseEntity<List<OrdenDTO>> findAll() {
+    public ResponseEntity<List<OrdenResponse>> findAll() {
         return ResponseEntity.ok(service.getAll());
     }
-
+    */
     @GetMapping("/{id}")
     @Operation(summary = "Obtiene orden por ID")
-    public ResponseEntity<OrdenDTO> findById(@PathVariable UUID id) {
+    public ResponseEntity<OrdenResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.getById(id));
     }
 
     @GetMapping("/search/findByStatus")
     @Operation(summary = "Buscar ordenes por status")
-    public ResponseEntity<List<OrdenDTO>> findBySize(@RequestParam("status") Status status) {
+    public ResponseEntity<List<OrdenResponse>> findBySize(@RequestParam("status") Status status) {
         return ResponseEntity.ok(service.findByStatus(status));
     }
 
     @GetMapping("/search/findByOrigin")
     @Operation(summary = "Buscar ordenes por origin")
-    public ResponseEntity<List<OrdenDTO>> findByOrigin(@RequestParam("origin") String origin) {
+    public ResponseEntity<List<OrdenResponse>> findByOrigin(@RequestParam("origin") String origin) {
         return ResponseEntity.ok(service.findByOrigin(origin));
     }
 
     @GetMapping("/search/findByDestination")
     @Operation(summary = "Buscar ordenes por destination")
-    public ResponseEntity<List<OrdenDTO>> findByDestination(@RequestParam("destination") String destination) {
+    public ResponseEntity<List<OrdenResponse>> findByDestination(@RequestParam("destination") String destination) {
         return ResponseEntity.ok(service.findByDestination(destination));
     }
 
     @GetMapping("/search/findByCreatedAtBetween")
     @Operation(summary = "Buscar ordenes entre fechas")
-    public ResponseEntity<List<OrdenDTO>> findByCreatedAtBetween(
+    public ResponseEntity<List<OrdenResponse>> findByCreatedAtBetween(
             @RequestParam("to")  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime to,
             @RequestParam("from")  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")  LocalDateTime from) {
         return ResponseEntity.ok(service.findByCreatedAtBetween(to, from));
     }
-
+    /*
     @PutMapping("/{id}")
     @Operation(summary = "Modificar una orden")
-    public ResponseEntity<UUID> editar(@Valid @RequestBody OrdenDTO dto, @PathVariable UUID id) {
+    public ResponseEntity<UUID> editar(@Valid @RequestBody OrdenResponse dto, @PathVariable UUID id) {
         Orden orden = Orden.fromCreate( service.getById(id) );
         orden.setOrigin(dto.origin());
         orden.setDestination(dto.destination());
@@ -100,9 +100,9 @@ public class OrdenController {
     public void deleteById(@PathVariable UUID id) {
         service.deleteById(id);
     }
-
+    */
     @PostMapping(value = "/asignacion/{orden-id}/{driver-id}", consumes = "multipart/form-data")
-    @Operation(summary = "asignacion de una orden a un sriver con documentos adjuntos")
+    @Operation(summary = "asignacion de una orden a un driver con documentos adjuntos")
     public ResponseEntity<?> asignacion(
             @PathVariable("orden-id") UUID idOrden,
             @PathVariable("driver-id") UUID idDriver,
