@@ -3,6 +3,13 @@
 Desarrollo de una API REST para la gestión de órdenes de transporte de una empresa de
 movilidad.
 
+## Volver a crear imagenes docker 
+
+```shell
+docker compose up --build -d
+```
+
+
 ## Crear imagenes docker y lanzar los contenedores
 
 ```shell

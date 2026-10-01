@@ -2,7 +2,6 @@ package com.ait.pase.orden_api.service;
 
 import com.ait.pase.orden_api.entity.Driver;
 import com.ait.pase.orden_api.exception.OperationNotPermittedException;
-import com.ait.pase.orden_api.model.OrdenDTO;
 import com.ait.pase.orden_api.model.OrdenResponse;
 import com.ait.pase.orden_api.entity.Orden;
 import com.ait.pase.orden_api.entity.Status;
@@ -10,7 +9,6 @@ import com.ait.pase.orden_api.exception.ResourceNotFoundException;
 import com.ait.pase.orden_api.model.OrdenRequest;
 import com.ait.pase.orden_api.repository.DriverRepository;
 import com.ait.pase.orden_api.repository.OrdenRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,14 +31,6 @@ public class OrdenService {
     private final OrdenMapper mapper;
     private final FileStorageService fileStorageService;
 
-    public UUID save(Orden orden) {
-        return repository.save(orden).getId();
-    }
-    public UUID save( OrdenDTO dto) {
-        Orden orden = Orden.fromCreate(dto);
-        orden.setStatus(Status.CREATED);
-        return repository.save(orden).getId();
-    }
     public UUID save(OrdenRequest ordenRequest){
         Orden orden = Orden.from(ordenRequest);
         orden.setStatus(Status.CREATED);
@@ -79,11 +69,11 @@ public class OrdenService {
     public OrdenResponse getById(UUID id) {
         return repository.findById(id)
                 .map(mapper)
-                .orElseThrow(() -> new ResourceNotFoundException("orden con id : " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Orden no encontrada con id : " + id));
     }
     public UUID changeStatus(UUID id,Status nuevoStatus) {
         Orden orden = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Orden no encontrada con el id :: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Orden no encontrada con el id :: " + id));
 
         if(orden.getStatus() == nuevoStatus){
             throw new OperationNotPermittedException("Ya se encuentra en el mismo status");
@@ -125,13 +115,13 @@ public class OrdenService {
 
     public void asignacion(UUID ordenId, UUID driverId, MultipartFile pdf, MultipartFile imagen) {
         Orden orden = repository.findById(ordenId)
-                .orElseThrow(() -> new EntityNotFoundException("Orden no encontrada con ID:: " + ordenId));
+                .orElseThrow(() -> new ResourceNotFoundException("Orden no encontrada con ID:: " + ordenId));
 
         if(orden.getStatus() != Status.CREATED){
             throw new OperationNotPermittedException("La asignacion solo esta permitido cuando la orden tiene status CREATED ");
         }
         Driver driver = driverRepository.findById(driverId)
-                .orElseThrow(() -> new EntityNotFoundException("Driver no encontrada con ID:: " + driverId));
+                .orElseThrow(() -> new ResourceNotFoundException("Driver no encontrada con ID:: " + driverId));
 
         if( !driver.getActive() ){
             throw new OperationNotPermittedException("La asignacion solo esta permitido cuando el driver esta activo");

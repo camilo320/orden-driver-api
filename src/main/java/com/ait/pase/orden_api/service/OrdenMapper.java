@@ -1,6 +1,5 @@
 package com.ait.pase.orden_api.service;
 
-import com.ait.pase.orden_api.model.OrdenDTO;
 import com.ait.pase.orden_api.entity.Orden;
 import com.ait.pase.orden_api.model.OrdenResponse;
 import org.springframework.stereotype.Service;

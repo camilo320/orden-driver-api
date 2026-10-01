@@ -1,9 +1,9 @@
 package com.ait.pase.orden_api.handler;
 
 import com.ait.pase.orden_api.exception.OperationNotPermittedException;
+import com.ait.pase.orden_api.exception.ResourceNotFoundException;
 import com.ait.pase.orden_api.model.ExceptionResponse;
 import com.ait.pase.orden_api.model.ValidationErrror;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -85,8 +85,8 @@ public class GlobalExceptionHandler {
                                 .build()
                 );
     }
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ExceptionResponse> handleEntityNotFoundException(EntityNotFoundException exp){
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleResourceNotFoundException(ResourceNotFoundException exp){
         return ResponseEntity
                 .status(NOT_FOUND)
                 .body(

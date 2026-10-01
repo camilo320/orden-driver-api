@@ -18,6 +18,7 @@ public class DriverService {
         Driver driver = Driver.builder()
                 .name(driverRequest.name())
                 .licenseNumber(driverRequest.licenseNumber())
+                .active(true)
                 .build();
         return repository.save(driver).getId();
     }

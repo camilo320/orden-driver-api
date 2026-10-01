@@ -22,17 +22,19 @@ public class OrdenApiApplication {
 			UsuarioRepository usuarioRepository,
 			PasswordEncoder passwordEncoder) {
 		return args -> {
-			String nombre = "Usuario";
-			String apellido = "Uno";
-			String email = nombre.toLowerCase() + "." + apellido.toLowerCase() + "@ait.pase.com";
-			Usuario usuario = Usuario.builder()
-					.nombre(nombre+" "+apellido)
-					.email(email)
-					.password(passwordEncoder.encode("password"))
-					.edad(37)
-					.genero(Genero.MASCULINO)
-					.build();
-			usuarioRepository.save(usuario);
+			if(usuarioRepository.count()==0) {
+				String nombre = "Usuario";
+				String apellido = "Uno";
+				String email = nombre.toLowerCase() + "." + apellido.toLowerCase() + "@ait.pase.com";
+				Usuario usuario = Usuario.builder()
+						.nombre(nombre + " " + apellido)
+						.email(email)
+						.password(passwordEncoder.encode("password"))
+						.edad(37)
+						.genero(Genero.MASCULINO)
+						.build();
+				usuarioRepository.save(usuario);
+			}
 		};
 	}
 }

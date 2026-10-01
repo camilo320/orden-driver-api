@@ -1,7 +1,6 @@
 package com.ait.pase.orden_api.entity;
 
 import com.ait.pase.orden_api.model.DriverResponse;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -27,10 +26,11 @@ public class Driver {
     UUID id;
     String name;
     String licenseNumber;
-    Boolean active = true;
+    Boolean active;
 
     @OneToMany(mappedBy = "driver")
     private List<Orden> ordenes;
+
     public DriverResponse toResponse() {
         return DriverResponse.builder()
                 .id(this.id)
@@ -39,4 +39,5 @@ public class Driver {
                 .active(this.active)
                 .build();
     }
+
 }
