@@ -34,6 +34,12 @@ docker compose up -d
   "password": "password"
 }
 ```
+## Eliminar logs
+
+```shell
+rm -r logs
+```
+
 ## Detener los contenedores y eliminarlas
 
 ```shell

@@ -1,5 +1,5 @@
 package com.ait.pase.orden_api.jwt;
-import com.ait.pase.orden_api.service.CustomerUserDetailsService;
+import com.ait.pase.orden_api.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +23,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     public JWTAuthenticationFilter(
             JWTUtil jwtUtil,
-            CustomerUserDetailsService userDetailsService
+            CustomUserDetailsService userDetailsService
     ) {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;

@@ -7,10 +7,10 @@ import java.util.UUID;
 
 public record UsuarioDTO(
         UUID id,
-        String name,
+        String nombre,
         String email,
         Genero genero,
-        Integer age,
+        Integer edad,
         List<String> roles,
         String username
 ) {

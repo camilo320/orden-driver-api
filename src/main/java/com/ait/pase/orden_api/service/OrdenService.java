@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static net.logstash.logback.argument.StructuredArguments.kv;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -32,46 +34,64 @@ public class OrdenService {
     private final FileStorageService fileStorageService;
 
     public UUID save(OrdenRequest ordenRequest){
+        log.info("Guardando Orden {} {}",
+                kv("origin", ordenRequest.origin()),
+                kv("destination",ordenRequest.destination()));
         Orden orden = Orden.from(ordenRequest);
         orden.setStatus(Status.CREATED);
         return repository.save(orden).getId();
     }
     public List<OrdenResponse> getAll() {
+        log.info("Obteniendo todas las ordenes");
        return ((List<Orden>) repository.findAll())
                 .stream()
                 .map(mapper)
                 .collect(Collectors.toList());
     }
     public List<OrdenResponse> findByStatus(Status status) {
+        log.info("Obteniendo ordenes con {}",
+                kv("status", status));
         return repository.findByStatus(status)
                 .stream()
                 .map(mapper)
                 .collect(Collectors.toList());
     }
     public List<OrdenResponse> findByOrigin(String origin) {
+        log.info("Obteniendo ordenes con {}",
+                kv("origin", origin));
         return repository.findByOrigin(origin)
                 .stream()
                 .map(mapper)
                 .collect(Collectors.toList());
     }
     public List<OrdenResponse> findByDestination(String destination) {
+        log.info("Obteniendo ordenes con {}",
+                kv("destination", destination));
         return repository.findByDestination(destination)
                 .stream()
                 .map(mapper)
                 .collect(Collectors.toList());
     }
-    public List<OrdenResponse> findByCreatedAtBetween(LocalDateTime to, LocalDateTime from) {
-        return repository.findByCreatedAtBetween(to, from)
+    public List<OrdenResponse> findByCreatedAtBetween(LocalDateTime from, LocalDateTime to) {
+        log.info("Obteniendo ordenes con fecha {} {}",
+                kv("desde", from),
+                kv("hasta",to));
+        return repository.findByCreatedAtBetween(from, to)
                 .stream()
                 .map(mapper)
                 .collect(Collectors.toList());
     }
     public OrdenResponse getById(UUID id) {
+        log.info("Obteniendo orden con {}",
+                kv("Id", id));
         return repository.findById(id)
                 .map(mapper)
                 .orElseThrow(() -> new ResourceNotFoundException("Orden no encontrada con id : " + id));
     }
     public UUID changeStatus(UUID id,Status nuevoStatus) {
+        log.info("Cambiando status del orden {} {}",
+                kv("Id", id),
+                kv("Status",nuevoStatus));
         Orden orden = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Orden no encontrada con el id :: " + id));
 
@@ -106,14 +126,19 @@ public class OrdenService {
     }
 
     public void deleteAll() {
+        log.warn("Borrando todas las ordenes");
         repository.deleteAll();
     }
     public void deleteById(UUID id) {
+        log.warn("Borrando orden con {}",kv("Id",id));
         repository.deleteById(id);
     }
 
 
     public void asignacion(UUID ordenId, UUID driverId, MultipartFile pdf, MultipartFile imagen) {
+        log.info("Asignacion de un driver a una orden {} {}",
+                kv("ordenId",ordenId),
+                kv("driverId",driverId));
         Orden orden = repository.findById(ordenId)
                 .orElseThrow(() -> new ResourceNotFoundException("Orden no encontrada con ID:: " + ordenId));
 

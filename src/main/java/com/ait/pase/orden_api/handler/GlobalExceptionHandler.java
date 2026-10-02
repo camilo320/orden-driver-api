@@ -4,6 +4,7 @@ import com.ait.pase.orden_api.exception.OperationNotPermittedException;
 import com.ait.pase.orden_api.exception.ResourceNotFoundException;
 import com.ait.pase.orden_api.model.ExceptionResponse;
 import com.ait.pase.orden_api.model.ValidationErrror;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -18,6 +19,7 @@ import java.util.Map;
 import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler(LockedException.class)
     public ResponseEntity<ExceptionResponse> handleException(LockedException exp) {
@@ -72,7 +74,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ValidationErrror> handleMethodArgumentNotValidException(MethodArgumentNotValidException exp) {
-
         Map<String, String> errores = new HashMap<>();
         exp.getBindingResult().getFieldErrors().forEach(err -> {
             errores.put(err.getField(), "El campo " + err.getField() + " " + err.getDefaultMessage());
@@ -97,7 +98,7 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse> handleException(Exception exp) {
-
+        log.error("Error Interno", exp);
         return ResponseEntity
                 .status(INTERNAL_SERVER_ERROR)
                 .body(

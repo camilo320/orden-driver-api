@@ -14,5 +14,5 @@ public interface OrdenRepository extends PagingAndSortingRepository<Orden, UUID>
     List<Orden> findByStatus(Status status);
     List<Orden> findByOrigin(String origin);
     List<Orden> findByDestination(String destination);
-    List<Orden> findByCreatedAtBetween(LocalDateTime to, LocalDateTime from);
+    List<Orden> findByCreatedAtBetween(LocalDateTime from, LocalDateTime to);
 }

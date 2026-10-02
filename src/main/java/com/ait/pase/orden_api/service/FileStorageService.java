@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 
 import static java.io.File.separator;
 import static java.lang.System.currentTimeMillis;
+import static net.logstash.logback.argument.StructuredArguments.kv;
 
 @Service
 @Slf4j
@@ -43,7 +44,7 @@ public class FileStorageService{
         if (!targetFolder.exists()) {
             boolean folderCreated = targetFolder.mkdirs();
             if (!folderCreated) {
-                log.warn("Falla en la creacion de directorios: " + targetFolder);
+                log.warn("Falla en la creacion de directorios {} " ,kv("folder",targetFolder) );
                 return null;
             }
         }
@@ -52,7 +53,7 @@ public class FileStorageService{
         Path targetPath = Paths.get(targetFilePath);
         try {
             Files.write(targetPath, sourceFile.getBytes());
-            log.info("Archivo guardado en : " + targetFilePath);
+            log.info("Archivo guardado en {} ",kv("ruta",targetFilePath) );
             return targetFilePath;
         } catch (IOException e) {
             log.error("El archivo no fue creado", e);

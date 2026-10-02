@@ -73,9 +73,9 @@ public class OrdenController {
     @GetMapping("/search/findByCreatedAtBetween")
     @Operation(summary = "Buscar ordenes entre fechas")
     public ResponseEntity<List<OrdenResponse>> findByCreatedAtBetween(
-            @RequestParam("to")  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime to,
-            @RequestParam("from")  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")  LocalDateTime from) {
-        return ResponseEntity.ok(service.findByCreatedAtBetween(to, from));
+            @RequestParam("from")  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime from,
+            @RequestParam("to")  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")  LocalDateTime to) {
+        return ResponseEntity.ok(service.findByCreatedAtBetween(from,to));
     }
     /*
     @PutMapping("/{id}")
