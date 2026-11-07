@@ -2,8 +2,6 @@ package com.ait.pase.orden_api.handler;
 
 import com.ait.pase.orden_api.exception.OperationNotPermittedException;
 import com.ait.pase.orden_api.exception.ResourceNotFoundException;
-import com.ait.pase.orden_api.model.ExceptionResponse;
-import com.ait.pase.orden_api.model.ValidationErrror;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;

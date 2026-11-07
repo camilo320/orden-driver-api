@@ -2,9 +2,9 @@ package com.ait.pase.orden_api.service;
 
 import com.ait.pase.orden_api.entity.Usuario;
 import com.ait.pase.orden_api.jwt.JWTUtil;
-import com.ait.pase.orden_api.model.AuthRequest;
-import com.ait.pase.orden_api.model.AuthResponse;
-import com.ait.pase.orden_api.model.UsuarioDTO;
+import com.ait.pase.orden_api.dto.AuthRequest;
+import com.ait.pase.orden_api.dto.AuthResponse;
+import com.ait.pase.orden_api.dto.UsuarioResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,7 +27,7 @@ public class AuthService {
                 )
         );
         Usuario principal = (Usuario) authentication.getPrincipal();
-        UsuarioDTO usuario = usuarioMapper.apply(principal);
+        UsuarioResponse usuario = usuarioMapper.apply(principal);
         String token = jwtUtil.issueToken(usuario.username(), usuario.roles());
         return new AuthResponse(token, usuario);
     }

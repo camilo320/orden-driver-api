@@ -2,11 +2,11 @@ package com.ait.pase.orden_api.service;
 
 import com.ait.pase.orden_api.entity.Driver;
 import com.ait.pase.orden_api.exception.OperationNotPermittedException;
-import com.ait.pase.orden_api.model.OrdenResponse;
+import com.ait.pase.orden_api.dto.OrdenResponse;
 import com.ait.pase.orden_api.entity.Orden;
 import com.ait.pase.orden_api.entity.Status;
 import com.ait.pase.orden_api.exception.ResourceNotFoundException;
-import com.ait.pase.orden_api.model.OrdenRequest;
+import com.ait.pase.orden_api.dto.OrdenRequest;
 import com.ait.pase.orden_api.repository.DriverRepository;
 import com.ait.pase.orden_api.repository.OrdenRepository;
 import lombok.RequiredArgsConstructor;

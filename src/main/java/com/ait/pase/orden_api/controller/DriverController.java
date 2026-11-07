@@ -1,7 +1,7 @@
 package com.ait.pase.orden_api.controller;
 
 import com.ait.pase.orden_api.entity.Driver;
-import com.ait.pase.orden_api.model.DriverRequest;
+import com.ait.pase.orden_api.dto.DriverRequest;
 import com.ait.pase.orden_api.service.DriverService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

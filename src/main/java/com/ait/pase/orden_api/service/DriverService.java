@@ -1,7 +1,7 @@
 package com.ait.pase.orden_api.service;
 
 import com.ait.pase.orden_api.entity.Driver;
-import com.ait.pase.orden_api.model.DriverRequest;
+import com.ait.pase.orden_api.dto.DriverRequest;
 import com.ait.pase.orden_api.repository.DriverRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

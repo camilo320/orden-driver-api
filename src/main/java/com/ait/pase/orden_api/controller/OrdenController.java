@@ -1,8 +1,8 @@
 package com.ait.pase.orden_api.controller;
 
-import com.ait.pase.orden_api.model.OrdenResponse;
+import com.ait.pase.orden_api.dto.OrdenResponse;
 import com.ait.pase.orden_api.entity.Status;
-import com.ait.pase.orden_api.model.OrdenRequest;
+import com.ait.pase.orden_api.dto.OrdenRequest;
 import com.ait.pase.orden_api.service.OrdenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

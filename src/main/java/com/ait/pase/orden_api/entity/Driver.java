@@ -1,6 +1,6 @@
 package com.ait.pase.orden_api.entity;
 
-import com.ait.pase.orden_api.model.DriverResponse;
+import com.ait.pase.orden_api.dto.DriverResponse;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

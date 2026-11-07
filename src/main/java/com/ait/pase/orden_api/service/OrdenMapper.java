@@ -1,8 +1,7 @@
 package com.ait.pase.orden_api.service;
 
 import com.ait.pase.orden_api.entity.Orden;
-import com.ait.pase.orden_api.model.OrdenResponse;
-import lombok.extern.slf4j.Slf4j;
+import com.ait.pase.orden_api.dto.OrdenResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;

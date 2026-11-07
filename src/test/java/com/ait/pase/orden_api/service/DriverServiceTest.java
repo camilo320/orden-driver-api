@@ -1,7 +1,7 @@
 package com.ait.pase.orden_api.service;
 
 import com.ait.pase.orden_api.entity.Driver;
-import com.ait.pase.orden_api.model.DriverRequest;
+import com.ait.pase.orden_api.dto.DriverRequest;
 import com.ait.pase.orden_api.repository.DriverRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

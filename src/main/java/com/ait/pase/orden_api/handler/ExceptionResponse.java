@@ -1,4 +1,4 @@
-package com.ait.pase.orden_api.model;
+package com.ait.pase.orden_api.handler;
 
 import lombok.Builder;
 

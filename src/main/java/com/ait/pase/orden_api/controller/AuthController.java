@@ -1,7 +1,7 @@
 package com.ait.pase.orden_api.controller;
 
-import com.ait.pase.orden_api.model.AuthRequest;
-import com.ait.pase.orden_api.model.AuthResponse;
+import com.ait.pase.orden_api.dto.AuthRequest;
+import com.ait.pase.orden_api.dto.AuthResponse;
 import com.ait.pase.orden_api.service.AuthService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

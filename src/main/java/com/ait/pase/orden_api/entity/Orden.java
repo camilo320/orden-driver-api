@@ -1,6 +1,6 @@
 package com.ait.pase.orden_api.entity;
 
-import com.ait.pase.orden_api.model.OrdenRequest;
+import com.ait.pase.orden_api.dto.OrdenRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;

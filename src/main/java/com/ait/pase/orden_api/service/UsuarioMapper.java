@@ -1,7 +1,7 @@
 package com.ait.pase.orden_api.service;
 
 import com.ait.pase.orden_api.entity.Usuario;
-import com.ait.pase.orden_api.model.UsuarioDTO;
+import com.ait.pase.orden_api.dto.UsuarioResponse;
 import org.springframework.stereotype.Service;
 
 
@@ -11,10 +11,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-public class UsuarioMapper implements Function<Usuario, UsuarioDTO> {
+public class UsuarioMapper implements Function<Usuario, UsuarioResponse> {
     @Override
-    public UsuarioDTO apply(Usuario us) {
-        return new UsuarioDTO(
+    public UsuarioResponse apply(Usuario us) {
+        return new UsuarioResponse(
                 us.getId(),
                 us.getNombre(),
                 us.getEmail(),
